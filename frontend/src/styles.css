@@ -1,0 +1,78 @@
+body {
+  font-family: sans-serif;
+  background: #f5f5f5;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  padding: 2rem;
+  max-width: 800px;
+  margin: auto;
+}
+
+button {
+  margin: 0.3rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  background: #007bff;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+input, textarea, select {
+  display: block;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  width: 100%;
+}
+
+h2, h3 {
+  color: #333;
+}
+
+.motion {
+  background: white;
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 10px;
+  box-shadow: 0 0 5px #ccc;
+}
+
+
+
+
+
+
+
+
+
+
+.container {
+  padding: 20px;
+  font-family: Arial;
+}
+
+.role-selector, .dashboard {
+  text-align: center;
+}
+
+.motion-form input {
+  padding: 8px;
+  margin-right: 10px;
+  width: 60%;
+}
+
+.motion-form button {
+  padding: 8px 12px;
+}
+
+.motion-list {
+  margin-top: 20px;
+}
+
+.vote-buttons button {
+  margin: 5px;
+  padding: 8px 12px;
+}
