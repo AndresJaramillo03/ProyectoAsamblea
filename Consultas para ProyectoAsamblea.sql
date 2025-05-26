@@ -1,3 +1,5 @@
+use asambleabdp
+
 SELECT * FROM dbo.accionista;
 SELECT * FROM dbo.asamblea;
 SELECT * FROM dbo.auxilio_bonificacion;
@@ -35,3 +37,6 @@ CREATE TABLE mocion (
   respuesta_mocion VARCHAR(255),
   descripcion VARCHAR(255)
 );
+ALTER TABLE mocion ADD COLUMn activo TINYINT(1) DEFAULT 1;
+
+select*from mocion

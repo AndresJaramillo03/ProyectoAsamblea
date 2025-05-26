@@ -1,7 +1,8 @@
+// archivo: motions.js (o como lo llames)
 const { sql, dbConfig } = require('../config/dbConfig');
 
 async function createMotion(motion) {
-    console.log('📥 motion recibido:', motion);
+  console.log('📥 motion recibido:', motion);
   try {
     await sql.connect(dbConfig);
 
@@ -12,8 +13,8 @@ async function createMotion(motion) {
     request.input('descripcion', sql.VarChar, motion.descripcion);
 
     const result = await request.query(`
-      INSERT INTO Mocion (codigo_asamblea_fk, tipo_votacion, pregunta, descripcion)
-      VALUES (@codigo_asamblea_fk, @tipo_votacion, @pregunta, @descripcion);
+      INSERT INTO Mocion (codigo_asamblea_fk, tipo_votacion, pregunta, descripcion, activo)
+      VALUES (@codigo_asamblea_fk, @tipo_votacion, @pregunta, @descripcion, 1);
       SELECT SCOPE_IDENTITY() AS id;
     `);
 
@@ -37,4 +38,17 @@ async function castVote(motionId, userId, vote) {
   }
 }
 
-module.exports = { createMotion, castVote };
+async function getActiveMotions() {
+  try {
+    await sql.connect(dbConfig);
+    const result = await sql.query(`
+      SELECT * FROM Mocion WHERE activo = 1;
+    `);
+    return result.recordset;
+  } catch (err) {
+    console.error('❌ Error obteniendo mociones activas:', err);
+    return [];
+  }
+}
+
+module.exports = { createMotion, castVote, getActiveMotions };
