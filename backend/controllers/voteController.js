@@ -1,4 +1,3 @@
-// archivo: motions.js (o como lo llames)
 const { sql, dbConfig } = require('../config/dbConfig');
 
 async function createMotion(motion) {

@@ -37,6 +37,7 @@ CREATE TABLE mocion (
   respuesta_mocion VARCHAR(255),
   descripcion VARCHAR(255)
 );
-ALTER TABLE mocion ADD COLUMn activo TINYINT(1) DEFAULT 1;
+ALTER TABLE mocion ADD activo BIT DEFAULT 1;
 
 select*from mocion
+select*from votos

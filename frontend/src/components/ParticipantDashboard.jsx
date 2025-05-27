@@ -5,25 +5,30 @@ function ParticipantDashboard({ socket }) {
   const [voted, setVoted] = useState({});
 
   useEffect(() => {
-    socket.on('new_motion', (motion) => {
-    setMotions((prev) => [...prev, motion]);
-    });
+    const handleNewMotion = (motion) => {
+      setMotions((prev) => {
+        const exists = prev.some((m) => m.id === motion.id);
+        return exists ? prev : [...prev, motion];
+      });
+    };
+
+    socket.on('new_motion', handleNewMotion);
 
     return () => {
-      socket.off('motion-list');
+      socket.off('new_motion', handleNewMotion);
     };
   }, [socket]);
 
-const handleVote = (motion, vote) => {
-  if (!voted[motion.id]) {
-    socket.emit('vote', {
-      motionId: motion.id,
-      userId: 1,
-      vote
-    });
-    setVoted((prev) => ({ ...prev, [motion.id]: vote }));
-  }
-};
+  const handleVote = (motion, vote) => {
+    if (!voted[motion.id]) {
+      socket.emit('vote', {
+        motionId: motion.id,
+        userId: 1,
+        vote,
+      });
+      setVoted((prev) => ({ ...prev, [motion.id]: vote }));
+    }
+  };
 
   return (
     <div className="dashboard">
@@ -33,9 +38,9 @@ const handleVote = (motion, vote) => {
         {motions.length === 0 ? (
           <p>No hay mociones en este momento.</p>
         ) : (
-    motions.map((motion) => (
-    <div key={motion.id} className="motion">
-     <strong>{motion.pregunta}</strong>
+          motions.map((motion) => (
+            <div key={motion.id} className="motion">
+              <strong>{motion.pregunta}</strong>
               {voted[motion.id] ? (
                 <p>Ya votaste: {voted[motion.id] === 'yes' ? '✅ Sí' : '❌ No'}</p>
               ) : (
