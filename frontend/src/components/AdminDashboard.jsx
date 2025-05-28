@@ -12,26 +12,41 @@ function AdminDashboard({ socket }) {
         codigo_asamblea_fk: 1,
         pregunta: motion,
         descripcion: 'Sin descripción',
-        tipo_votacion: 'Sí/No'
+        tipo_votacion: 'Sí/No/Abstenerse'
         });
         setMotion('');
     }
   };
 
-  useEffect(() => {
-    socket.on('new_motion', (motion) => {
-    setMotions((prev) => [...prev, motion]);
+useEffect(() => {
+  const handleNewMotion = (motion) => {
+    setMotions((prev) => {
+      const exists = prev.some((m) => m.id === motion.id);
+      return exists ? prev : [...prev, motion];
     });
+  };
 
-    socket.on('vote-update', (voteData) => {
-      setVotes(voteData);
+  const handleVoteUpdate = ({ motionId, vote }) => {
+    setVotes((prev) => {
+      const current = prev[motionId] || { yes: 0, no: 0, abstain: 0 };
+      return {
+        ...prev,
+        [motionId]: {
+          ...current,
+          [vote]: (current[vote] || 0) + 1,
+        },
+      };
     });
+  };
 
-    return () => {
-      socket.off('motion-list');
-      socket.off('vote-update');
-    };
-  }, [socket]);
+  socket.on('new_motion', handleNewMotion);
+  socket.on('vote-update', handleVoteUpdate);
+
+  return () => {
+    socket.off('new_motion', handleNewMotion);
+    socket.off('vote-update', handleVoteUpdate);
+  };
+}, [socket]);
 
   return (
     <div className="dashboard">
@@ -54,6 +69,7 @@ function AdminDashboard({ socket }) {
             <strong>{m.pregunta}</strong>
             <p>Votos a favor: {votes[m.id]?.yes || 0}</p>
             <p>Votos en contra: {votes[m.id]?.no || 0}</p>
+            <p>Abstenciones: {votes[m.id]?.abstain || 0}</p>
           </div>
         ))}
       </div>

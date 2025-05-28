@@ -23,7 +23,7 @@ function ParticipantDashboard({ socket }) {
     if (!voted[motion.id]) {
       socket.emit('vote', {
         motionId: motion.id,
-        userId: 1,
+        userId: 4404,
         vote,
       });
       setVoted((prev) => ({ ...prev, [motion.id]: vote }));
@@ -42,11 +42,12 @@ function ParticipantDashboard({ socket }) {
             <div key={motion.id} className="motion">
               <strong>{motion.pregunta}</strong>
               {voted[motion.id] ? (
-                <p>Ya votaste: {voted[motion.id] === 'yes' ? '✅ Sí' : '❌ No'}</p>
+                <p>Ya votaste: {voted[motion.id] === 'yes' ? '✅ Sí' : voted[motion.id] === 'no' ? '❌ No' : '⚪ Abstenerse'}</p>
               ) : (
                 <div className="vote-buttons">
                   <button onClick={() => handleVote(motion, 'yes')}>Sí</button>
                   <button onClick={() => handleVote(motion, 'no')}>No</button>
+                  <button onClick={() => handleVote(motion, 'abstain')}>Abstenerse</button>
                 </div>
               )}
             </div>

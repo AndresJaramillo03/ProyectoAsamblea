@@ -9,13 +9,13 @@ function setupSocket(io) {
       if (motionId) {
         const fullMotion = { ...motion, id: motionId };
         io.to('participant').emit('new_motion', fullMotion);
-        io.to('admin').emit('motion_created', fullMotion);
+        io.to('admin').emit('new_motion', fullMotion);
       }
     });
 
     socket.on('vote', async ({ motionId, userId, vote }) => {
       await castVote(motionId, userId, vote);
-      io.to('admin').emit('vote_update', { motionId, userId, vote });
+      io.to('admin').emit('vote-update', { motionId, userId, vote });
     });
   });
 }

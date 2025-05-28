@@ -41,3 +41,35 @@ ALTER TABLE mocion ADD activo BIT DEFAULT 1;
 
 select*from mocion
 select*from votos
+select*from usuario
+
+
+
+alter table mocion alter column codigo_asamblea_fk bigint
+------------------
+ALTER TABLE votos
+DROP CONSTRAINT FK__votos__codigo_mo__6FE99F9F;
+------------------
+ALTER TABLE votos
+ALTER COLUMN codigo_mocion_fk INT NOT NULL; -- O el tipo/cambio que necesites
+------------------
+ALTER TABLE votos
+ADD CONSTRAINT FK__votos__codigo_mo__6FE99F9F
+FOREIGN KEY (codigo_mocion_fk)
+REFERENCES mocion(codigo_mocion); -- Ajusta si el nombre es diferente
+------------------
+ALTER TABLE Votos
+ADD CONSTRAINT FK_Votos_Mocion
+FOREIGN KEY (codigo_mocion_fk)
+REFERENCES Mocion(codigo_mocion);
+------------------
+exec sp_rename 'votos.cantidad_votos','voto', 'column'
+------------------
+alter table votos alter column voto nvarchar(600)
+------------------
+SELECT COLUMN_NAME, DATA_TYPE
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = 'Votos' AND COLUMN_NAME = 'voto';
+------------------
+ 
+

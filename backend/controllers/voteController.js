@@ -28,12 +28,15 @@ async function castVote(motionId, userId, vote) {
   try {
     await sql.connect(dbConfig);
     if (userId === 29 || userId === 30) return;
-    await sql.query(`
-      INSERT INTO Voto (mocion_id, participante_id, voto)
+    await sql.query(
+      
+      `
+      INSERT INTO Votos (codigo_mocion_fk, documento_usuario_fk, voto )
       VALUES (${motionId}, ${userId}, '${vote}');
     `);
   } catch (err) {
     console.error('❌ Error registrando voto:', err);
+    console.log("Registrando voto para documento_usuario:", documento_usuario_fk);
   }
 }
 
