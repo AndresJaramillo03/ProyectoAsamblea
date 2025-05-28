@@ -4,19 +4,21 @@ function AdminDashboard({ socket }) {
   const [motion, setMotion] = useState('');
   const [motions, setMotions] = useState([]);
   const [votes, setVotes] = useState({});
+  const [descripcion, setDescripcion] = useState('');
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (motion.trim()) {
-        socket.emit('send_motion', {
-        codigo_asamblea_fk: 1,
-        pregunta: motion,
-        descripcion: 'Sin descripción',
-        tipo_votacion: 'Sí/No/Abstenerse'
-        });
-        setMotion('');
-    }
-  };
+const handleSubmit = (e) => {
+  e.preventDefault();
+  if (motion.trim()) {
+    socket.emit('send_motion', {
+      codigo_asamblea_fk: 1,
+      pregunta: motion,
+      descripcion: descripcion.trim() || 'Sin descripción',
+      tipo_votacion: 'Sí/No/Abstenerse'
+    });
+    setMotion('');
+    setDescripcion('');
+  }
+};
 
 useEffect(() => {
   const handleNewMotion = (motion) => {
@@ -58,6 +60,12 @@ useEffect(() => {
           value={motion}
           onChange={(e) => setMotion(e.target.value)}
           placeholder="Escribe una moción"
+        />
+        <input
+          type="text"
+          value={descripcion}
+          onChange={(e) => setDescripcion(e.target.value)}
+          placeholder="Descripción de la moción"
         />
         <button type="submit">Enviar Moción</button>
       </form>

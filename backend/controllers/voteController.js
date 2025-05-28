@@ -9,7 +9,7 @@ async function createMotion(motion) {
     request.input('codigo_asamblea_fk', sql.Int, motion.codigo_asamblea_fk);
     request.input('tipo_votacion', sql.VarChar, motion.tipo_votacion);
     request.input('pregunta', sql.VarChar, motion.pregunta);
-    request.input('descripcion', sql.VarChar, motion.descripcion);
+    request.input('descripcion', sql.VarChar, motion.descripcion?.trim() || 'Sin descripción');
 
     const result = await request.query(`
       INSERT INTO Mocion (codigo_asamblea_fk, tipo_votacion, pregunta, descripcion, activo)

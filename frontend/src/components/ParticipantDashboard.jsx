@@ -38,20 +38,21 @@ function ParticipantDashboard({ socket }) {
         {motions.length === 0 ? (
           <p>No hay mociones en este momento.</p>
         ) : (
-          motions.map((motion) => (
-            <div key={motion.id} className="motion">
-              <strong>{motion.pregunta}</strong>
-              {voted[motion.id] ? (
-                <p>Ya votaste: {voted[motion.id] === 'yes' ? '✅ Sí' : voted[motion.id] === 'no' ? '❌ No' : '⚪ Abstenerse'}</p>
-              ) : (
-                <div className="vote-buttons">
-                  <button onClick={() => handleVote(motion, 'yes')}>Sí</button>
-                  <button onClick={() => handleVote(motion, 'no')}>No</button>
-                  <button onClick={() => handleVote(motion, 'abstain')}>Abstenerse</button>
+              motions.map((motion) => (
+                <div key={motion.id} className="motion">
+                  <strong>{motion.pregunta}</strong>
+                  <p>{motion.descripcion}</p>
+                  {voted[motion.id] ? (
+                    <p>Ya votaste: {voted[motion.id] === 'yes' ? '✅ Sí' : voted[motion.id] === 'no' ? '❌ No' : '⚪ Abstenerse'}</p>
+                  ) : (
+                    <div className="vote-buttons">
+                      <button onClick={() => handleVote(motion, 'yes')}>Sí</button>
+                      <button onClick={() => handleVote(motion, 'no')}>No</button>
+                      <button onClick={() => handleVote(motion, 'abstain')}>Abstenerse</button>
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
-          ))
+              ))
         )}
       </div>
     </div>
