@@ -23,7 +23,7 @@ function ParticipantDashboard({ socket }) {
     if (!voted[motion.id]) {
       socket.emit('vote', {
         motionId: motion.id,
-        userId: 4404,
+        userId: 130172,
         vote,
       });
       setVoted((prev) => ({ ...prev, [motion.id]: vote }));

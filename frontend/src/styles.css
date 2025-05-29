@@ -51,18 +51,18 @@ button {
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
-  color: white;
+  color: rgb(0, 0, 0);
   font-weight: 600;
   box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
 
 
 .btn-admin {
-  background-color: #0d47a1;
+  background-color: #0011ff;
 }
 
 .btn-admin:hover {
-  background-color: #08306b;
+  background-color: #0011ff;
 }
 
 .btn-participant {
@@ -80,7 +80,7 @@ input, textarea, select {
   padding: 0.75rem;
   width: 100%;
   font-size: 1rem;
-  border: 1px solid #ccc;
+  border: 1px solid #1b24a1;
   border-radius: 8px;
 }
 
