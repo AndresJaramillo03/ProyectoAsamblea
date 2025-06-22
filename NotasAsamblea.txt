@@ -1,3 +1,0 @@
-EJECUCION:
-Frontend: npm run dev
-Backend: node index.js
